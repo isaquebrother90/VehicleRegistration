@@ -15,7 +15,7 @@ Premissas
 - **Adiciona veículo**
 - **Atualiza veículo**
 - **Atualiza parcialmente um veículo**
-- **Busca Paginada**: Suporte a busca paginada para facilitar a navegação e a recuperação de dados em partes. Suporta filtro por nome, idade e cep. Para todos os tipos de usuário (ADMIN e USER).
+g- **Busca Paginada**: Suporte a busca paginada para facilitar a navegação e a recuperação de dados em partes. Suporta filtro por nome, idade e cep. Para todos os tipos de usuário (ADMIN e USER).
 
 ## Pré-requisitos
 - **Java 17**: Certifique-se de ter o Java 17 instalado em sua máquina.

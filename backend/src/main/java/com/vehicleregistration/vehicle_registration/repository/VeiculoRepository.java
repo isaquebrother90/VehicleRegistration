@@ -13,7 +13,7 @@ public interface VeiculoRepository extends JpaRepository<Veiculo, Long> {
     Long countByVendidoFalse();
 
     @Query("SELECT v.marca, COUNT(v) FROM Veiculo v GROUP BY v.marca")
-    List<Object[]> countByMarca();
+    List<Object[]> countByFabricante();
 
     @Query("SELECT v FROM Veiculo v WHERE " +
             "(:marca IS NULL OR v.marca = :marca) AND " +

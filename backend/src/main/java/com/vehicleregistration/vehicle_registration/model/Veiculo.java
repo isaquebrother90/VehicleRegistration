@@ -1,6 +1,7 @@
 package com.vehicleregistration.vehicle_registration.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -11,13 +12,26 @@ public class Veiculo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull(message = "O nome do veículo não pode ser nulo")
+    @Column(nullable = false)
     private String veiculo;
+
+    @NotNull(message = "A marca não pode ser nula")
+    @Column(nullable = false)
     private String marca;
+
+    @NotNull(message = "O ano não pode ser nulo")
+    @Column(nullable = false)
     private Integer ano;
+
     private String descricao;
+
+    @NotNull(message = "O campo 'vendido' não pode ser nulo")
+    @Column(nullable = false)
     private Boolean vendido;
 
     private LocalDateTime created;
+
     private LocalDateTime updated;
 
     @PrePersist

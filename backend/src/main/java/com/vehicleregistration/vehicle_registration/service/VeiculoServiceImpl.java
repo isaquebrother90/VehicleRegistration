@@ -2,6 +2,7 @@ package com.vehicleregistration.vehicle_registration.service;
 
 import com.vehicleregistration.vehicle_registration.model.Veiculo;
 import com.vehicleregistration.vehicle_registration.repository.VeiculoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class VeiculoServiceImpl implements VeiculoService {
@@ -25,7 +27,7 @@ public class VeiculoServiceImpl implements VeiculoService {
 
     @Override
     public Veiculo findById(Long id) {
-        return repository.findById(id).orElseThrow(() -> new RuntimeException("Veículo não encontrado"));
+        return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Veículo não encontrado com ID: " + id));
     }
 
     @Override
@@ -86,13 +88,24 @@ public class VeiculoServiceImpl implements VeiculoService {
     }
 
     @Override
-    public List<Object[]> countByDecada() {
-        return repository.countByDecada();
+    public List<String> countByDecada() {
+        List<Object[]> distribuicao = repository.countByDecada();
+
+        // Transforma a lista de arrays em uma lista de strings no formato desejado
+        List<String> resultado = distribuicao.stream()
+                .map(arr -> String.format("Década %d = %d veículos", (Integer) arr[0], (Long) arr[1]))
+                .collect(Collectors.toList());
+        return resultado;
     }
 
     @Override
-    public List<Object[]> countByMarca() {
-        return repository.countByMarca();
+    public List<String> countByFabricante() {
+        List<Object[]> distribuicao = repository.countByFabricante();
+
+        List<String> resultado = distribuicao.stream()
+                .map(arr -> String.format("%s = %d veículos", arr[0], (Long) arr[1]))
+                .toList();
+        return resultado;
     }
 
     @Override

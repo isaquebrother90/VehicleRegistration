@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.ExampleObject;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -65,7 +66,7 @@ public interface VeiculoController {
             }
     )
     @PostMapping
-    ResponseEntity<Veiculo> save(@RequestBody Veiculo veiculo);
+    ResponseEntity<Veiculo> save(@Valid @RequestBody Veiculo veiculo);
 
     @Operation(
             summary = "Atualizar um veículo existente",
@@ -83,7 +84,7 @@ public interface VeiculoController {
             }
     )
     @PutMapping("/{id}")
-    ResponseEntity<Veiculo> update(@Parameter(description = "ID do veículo a ser atualizado") @PathVariable Long id, @RequestBody Veiculo veiculo);
+    ResponseEntity<Veiculo> update(@Parameter(description = "ID do veículo a ser atualizado") @PathVariable Long id, @Valid @RequestBody Veiculo veiculo);
 
     @Operation(
             summary = "Atualização parcial de um veículo",
@@ -103,7 +104,7 @@ public interface VeiculoController {
     @PatchMapping("/{id}")
     ResponseEntity<Veiculo> patchVeiculo(
             @Parameter(description = "ID do veículo a ser parcialmente atualizado") @PathVariable Long id,
-            @RequestBody Map<String, Object> updates);
+            @Valid @RequestBody Map<String, Object> updates);
 
     @Operation(
             summary = "Excluir um veículo",
@@ -141,20 +142,20 @@ public interface VeiculoController {
             }
     )
     @GetMapping("/distribuicao-decada")
-    ResponseEntity<List<Object[]>> countByDecada();
+    ResponseEntity<List<String>> countByDecada();
 
     @Operation(
-            summary = "Contar veículos por marca",
-            description = "Retorna a distribuição de veículos por marca",
+            summary = "Contar veículos por fabricante",
+            description = "Retorna a distribuição de veículos por fabricantes",
             responses = {
-                    @ApiResponse(responseCode = "200", description = "Distribuição retornada com sucesso",
+                    @ApiResponse(responseCode = "200", description = "Distribuição por fabricantes retornada com sucesso",
                             content = @Content(schema = @Schema(implementation = Object[].class),
                                     examples = @ExampleObject(value = "[{\"marca\":\"Fiat\",\"quantidade\":7},{\"marca\":\"Volkswagen\",\"quantidade\":8}]"))),
                     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
             }
     )
-    @GetMapping("/distribuicao-marca")
-    ResponseEntity<List<Object[]>> countByMarca();
+    @GetMapping("/distribuicao-fabricante")
+    ResponseEntity<List<String>> countByFabricantes();
 
     @Operation(
             summary = "Listar veículos cadastrados na última semana",

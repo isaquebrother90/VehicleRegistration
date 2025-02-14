@@ -15,8 +15,8 @@ public interface VeiculoService {
     Veiculo patchVeiculo(Long id, Map<String, Object> updates);
     void delete(Long id);
     Long countNaoVendidos();
-    List<Object[]> countByDecada();
-    List<Object[]> countByMarca();
+    List<String> countByDecada();
+    List<String> countByFabricante();
     List<Veiculo> findCadastradosNaUltimaSemana();
     List<Veiculo> findByMarcaAnoCor(String marca, Integer ano, String cor);
 }

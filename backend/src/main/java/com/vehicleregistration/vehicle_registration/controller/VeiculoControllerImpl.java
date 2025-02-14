@@ -88,14 +88,14 @@ public class VeiculoControllerImpl {
     }
 
     @GetMapping("/distribuicao-decada")
-    public ResponseEntity<List<Object[]>> countByDecada() {
-        List<Object[]> distribuicao = vehicleService.countByDecada();
+    public ResponseEntity<List<String>> countByDecada() {
+        List<String> distribuicao = vehicleService.countByDecada();
         return ResponseEntity.ok(distribuicao);
     }
 
-    @GetMapping("/distribuicao-marca")
-    public ResponseEntity<List<Object[]>> countByMarca() {
-        List<Object[]> distribuicao = vehicleService.countByMarca();
+    @GetMapping("/distribuicao-fabricante")
+    public ResponseEntity<List<String>> countByFabricante() {
+        List<String> distribuicao = vehicleService.countByFabricante();
         return ResponseEntity.ok(distribuicao);
     }
 
