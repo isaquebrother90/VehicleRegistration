@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class VeiculoServiceImpl implements VeiculoService {
@@ -37,6 +38,37 @@ public class VeiculoServiceImpl implements VeiculoService {
         existingVeiculo.setDescricao(veiculo.getDescricao());
         existingVeiculo.setVendido(veiculo.getVendido());
         return repository.save(existingVeiculo);
+    }
+
+    @Override
+    public Veiculo patchVeiculo(Long id, Map<String, Object> updates) {
+        Veiculo veiculo = findById(id); // Busca o veículo existente
+
+        // Itera sobre os campos a serem atualizados
+        updates.forEach((campo, valor) -> {
+            switch (campo) {
+                case "veiculo":
+                    veiculo.setVeiculo((String) valor);
+                    break;
+                case "marca":
+                    veiculo.setMarca((String) valor);
+                    break;
+                case "ano":
+                    veiculo.setAno((Integer) valor);
+                    break;
+                case "descricao":
+                    veiculo.setDescricao((String) valor);
+                    break;
+                case "vendido":
+                    veiculo.setVendido((Boolean) valor);
+                    break;
+                default:
+                    throw new IllegalArgumentException("Campo inválido: " + campo);
+            }
+        });
+
+        veiculo.setUpdated(LocalDateTime.now()); // Atualiza a data de modificação
+        return repository.save(veiculo); // Salva as alterações
     }
 
     @Override

@@ -1,0 +1,258 @@
+openapi: 3.0.1
+info:
+  title: Vehicle Registration API
+  description: >-
+    Solução responsável por permitir registro de veículos, alterações e buscas
+    personalizadas.
+  termsOfService: 'https://github.com/isaquebrother90/VehicleRegistration/'
+  contact:
+    name: Vehicle Registration
+    url: 'https://github.com/isaquebrother90/VehicleRegistration/'
+    email: vehicleregistration@gmail.com
+  license:
+    name: MIT License
+    url: 'https://choosealicense.com/licenses/mit/'
+  version: '1.0'
+servers:
+  - url: 'http://localhost:8080'
+    description: Server URL in Development environment
+security:
+  - bearerAuth: []
+tags:
+  - name: Veículos
+    description: API para gerenciamento de veículos
+paths:
+  '/veiculos/{id}':
+    get:
+      tags:
+        - Veículos
+      operationId: findById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Veiculo'
+    put:
+      tags:
+        - Veículos
+      operationId: update
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Veiculo'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Veiculo'
+    delete:
+      tags:
+        - Veículos
+      operationId: delete
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: OK
+    patch:
+      tags:
+        - Veículos
+      operationId: patchVeiculo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties:
+                type: object
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Veiculo'
+  /veiculos:
+    get:
+      tags:
+        - Veículos
+      operationId: findAll
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Veiculo'
+    post:
+      tags:
+        - Veículos
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Veiculo'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Veiculo'
+  /veiculos/ultima-semana:
+    get:
+      tags:
+        - Veículos
+      operationId: findCadastradosNaUltimaSemana
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Veiculo'
+  /veiculos/nao-vendidos:
+    get:
+      tags:
+        - Veículos
+      operationId: countNaoVendidos
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int64
+  /veiculos/filtro:
+    get:
+      tags:
+        - Veículos
+      operationId: findByMarcaAnoCor
+      parameters:
+        - name: marca
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ano
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: cor
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Veiculo'
+  /veiculos/distribuicao-marca:
+    get:
+      tags:
+        - Veículos
+      operationId: countByMarca
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: object
+  /veiculos/distribuicao-decada:
+    get:
+      tags:
+        - Veículos
+      operationId: countByDecada
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: object
+components:
+  schemas:
+    Veiculo:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        veiculo:
+          type: string
+        marca:
+          type: string
+        ano:
+          type: integer
+          format: int32
+        descricao:
+          type: string
+        vendido:
+          type: boolean
+        created:
+          type: string
+          format: date-time
+        updated:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
