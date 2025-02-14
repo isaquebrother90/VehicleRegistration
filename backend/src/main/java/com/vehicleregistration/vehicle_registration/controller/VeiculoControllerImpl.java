@@ -3,6 +3,7 @@ package com.vehicleregistration.vehicle_registration.controller;
 import com.vehicleregistration.vehicle_registration.model.Veiculo;
 import com.vehicleregistration.vehicle_registration.service.VeiculoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,29 +26,29 @@ public class VeiculoControllerImpl {
 
     @GetMapping
     public ResponseEntity<Page<Veiculo>> findAll(
-            @RequestParam(defaultValue = "0") int page, // Número da página (começa em 0)
-            @RequestParam(defaultValue = "10") int size // Tamanho da página
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
     ) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Veiculo> veiculos = vehicleService.findAll(pageable);
 
         if (veiculos.isEmpty()) {
-            return ResponseEntity.noContent().build(); // 204 No Content se a lista estiver vazia
+            return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(veiculos); // 200 OK com a página de veículos
+        return ResponseEntity.ok(veiculos);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Veiculo> findById(@PathVariable Long id) {
         Veiculo veiculo = vehicleService.findById(id);
         if (veiculo == null) {
-            return ResponseEntity.notFound().build(); // 404 Not Found
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok(veiculo); // 200 OK
+        return ResponseEntity.ok(veiculo);
     }
 
     @PostMapping
-    public ResponseEntity<Veiculo> save(@RequestBody Veiculo veiculo) {
+    public ResponseEntity<Veiculo> save(@Valid @RequestBody Veiculo veiculo) {
         Veiculo savedVeiculo = vehicleService.save(veiculo);
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -58,7 +59,7 @@ public class VeiculoControllerImpl {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Veiculo> update(@PathVariable Long id, @RequestBody Veiculo veiculo) {
+    public ResponseEntity<Veiculo> update(@PathVariable Long id, @Valid @RequestBody Veiculo veiculo) {
         Veiculo updatedVeiculo = vehicleService.update(id, veiculo);
         if (updatedVeiculo == null) {
             return ResponseEntity.notFound().build(); // 404 Not Found
@@ -67,7 +68,7 @@ public class VeiculoControllerImpl {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Veiculo> patchVeiculo(@PathVariable Long id, @RequestBody Map<String, Object> updates) {
+    public ResponseEntity<Veiculo> patchVeiculo(@PathVariable Long id, @Valid @RequestBody Map<String, Object> updates) {
         Veiculo patchedVeiculo = vehicleService.patchVeiculo(id, updates);
         if (patchedVeiculo == null) {
             return ResponseEntity.notFound().build(); // 404 Not Found

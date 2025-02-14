@@ -14,8 +14,8 @@ Premissas
 ## Funcionalidades
 - **Adiciona veículo**
 - **Atualiza veículo**
-- **Atualiza parcialmente um veículo**
-g- **Busca Paginada**: Suporte a busca paginada para facilitar a navegação e a recuperação de dados em partes. Suporta filtro por nome, idade e cep. Para todos os tipos de usuário (ADMIN e USER).
+  - **Atualiza parcialmente um veículo**
+  g- **Busca Paginada**: Suporte a busca paginada para facilitar a navegação e a recuperação de dados em partes. Suporta filtro por nome, idade e cep. Para todos os tipos de usuário (ADMIN e USER).
 
 ## Pré-requisitos
 - **Java 17**: Certifique-se de ter o Java 17 instalado em sua máquina.
@@ -59,6 +59,7 @@ Acesse a aplicação em http://localhost:8080.
 ```
 docker-compose up --build
 ```
+Para usar o Swagger no container será necessário usar trocar localhost pelo ipv4 da sua máquina. Ex: xxx.xxx.xx.x/vehicle-registration-doc"
 
 ## Documentação e Testes de Endpoints
 A API utiliza o Swagger 3 para documentar e permitir testes dos endpoints. Após executar a aplicação, para acessar a documentação interativa, acesse http://localhost:8080/cadastra-people-doc ou http://localhost:8080/swagger-ui/index.html.

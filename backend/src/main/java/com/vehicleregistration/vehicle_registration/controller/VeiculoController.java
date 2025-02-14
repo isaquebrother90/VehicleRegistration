@@ -60,9 +60,9 @@ public interface VeiculoController {
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = Veiculo.class),
-                                    examples = @ExampleObject(value = "{\"id\":3,\"veiculo\":\"Civic\",\"marca\":\"Honda\",\"ano\":2023,\"descricao\":\"Carro novo...\",\"vendido\":false,\"created\":\"2024-08-02T14:00:00\",\"updated\":\"2024-08-02T14:00:00\"}"))),
+                                    examples = @ExampleObject(value = "{\"veiculo\":\"Civic\",\"marca\":\"Honda\",\"ano\":2023,\"descricao\":\"Carro novo...\",\"vendido\":false,\"created\":\"2024-08-02T14:00:00\",\"updated\":\"2024-08-02T14:00:00\"}"))),
                     @ApiResponse(responseCode = "400", description = "Dados inválidos para salvar o veículo"),
-                    @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
+                    @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = { @Content(schema = @Schema()) })
             }
     )
     @PostMapping
@@ -77,7 +77,7 @@ public interface VeiculoController {
                             content = @Content(
                                     mediaType = "application/json",
                                     schema = @Schema(implementation = Veiculo.class),
-                                    examples = @ExampleObject(value = "{\"id\":1,\"veiculo\":\"Fiat Uno Turbo\",\"marca\":\"Fiat\",\"ano\":2015,\"descricao\":\"Carro turbo...\",\"vendido\":false,\"created\":\"2024-08-01T10:00:00\",\"updated\":\"2024-08-02T15:00:00\"}"))),
+                                    examples = @ExampleObject(value = "{\"veiculo\":\"Fiat Uno Turbo\",\"marca\":\"Fiat\",\"ano\":2015,\"descricao\":\"Carro turbo...\",\"vendido\":false,\"created\":\"2024-08-01T10:00:00\",\"updated\":\"2024-08-02T15:00:00\"}"))),
                     @ApiResponse(responseCode = "400", description = "Dados inválidos para atualizar o veículo"),
                     @ApiResponse(responseCode = "404", description = "Veículo não encontrado"),
                     @ApiResponse(responseCode = "500", description = "Erro interno do servidor")

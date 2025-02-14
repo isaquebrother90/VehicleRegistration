@@ -1,8 +1,9 @@
 package com.vehicleregistration.vehicle_registration.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
 
     @NotNull(message = "O nome do veículo não pode ser nulo")
@@ -21,7 +23,10 @@ public class Veiculo {
     private String marca;
 
     @NotNull(message = "O ano não pode ser nulo")
+    @Min(value = 1000, message = "O ano deve ter pelo menos 4 dígitos")
+    @Max(value = 9999, message = "O ano não pode ter mais de 4 dígitos")
     @Column(nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private Integer ano;
 
     private String descricao;

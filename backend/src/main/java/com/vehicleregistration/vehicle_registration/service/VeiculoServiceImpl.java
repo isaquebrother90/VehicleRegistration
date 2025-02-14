@@ -3,15 +3,19 @@ package com.vehicleregistration.vehicle_registration.service;
 import com.vehicleregistration.vehicle_registration.model.Veiculo;
 import com.vehicleregistration.vehicle_registration.repository.VeiculoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class VeiculoServiceImpl implements VeiculoService {
 
@@ -30,9 +34,18 @@ public class VeiculoServiceImpl implements VeiculoService {
         return repository.findById(id).orElseThrow(() -> new EntityNotFoundException("Veículo não encontrado com ID: " + id));
     }
 
+    @Transactional
     @Override
     public Veiculo save(Veiculo veiculo) {
+        validateVeiculo(veiculo);
         return repository.save(veiculo);
+    }
+
+    private void validateVeiculo(Veiculo veiculo) {
+        if (veiculo.getAno() == null) {
+            log.error("Ano do veículo não pode ser nulo: {}", veiculo);
+            throw new IllegalArgumentException("O ano do veículo é obrigatório");
+        }
     }
 
     @Override
@@ -60,12 +73,18 @@ public class VeiculoServiceImpl implements VeiculoService {
                     veiculo.setMarca((String) valor);
                     break;
                 case "ano":
+                    if (!(valor instanceof Integer)) {
+                        throw new IllegalArgumentException("O campo 'ano' deve ser um número inteiro.");
+                    }
                     veiculo.setAno((Integer) valor);
                     break;
                 case "descricao":
                     veiculo.setDescricao((String) valor);
                     break;
                 case "vendido":
+                    if (!(valor instanceof Boolean)) {
+                        throw new IllegalArgumentException("O campo 'vendido' deve ser um valor booleano.");
+                    }
                     veiculo.setVendido((Boolean) valor);
                     break;
                 default:
@@ -79,6 +98,9 @@ public class VeiculoServiceImpl implements VeiculoService {
 
     @Override
     public void delete(Long id) {
+        if (!repository.existsById(id)) {
+            throw new EntityNotFoundException("Veículo não encontrado com ID: " + id);
+        }
         repository.deleteById(id);
     }
 
@@ -88,7 +110,7 @@ public class VeiculoServiceImpl implements VeiculoService {
     }
 
     @Override
-    public List<String> countByDecada() {
+     public List<String> countByDecada() {
         List<Object[]> distribuicao = repository.countByDecada();
 
         // Transforma a lista de arrays em uma lista de strings no formato desejado
