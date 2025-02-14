@@ -3,6 +3,8 @@ package com.vehicleregistration.vehicle_registration.service;
 import com.vehicleregistration.vehicle_registration.model.Veiculo;
 import com.vehicleregistration.vehicle_registration.repository.VeiculoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -15,7 +17,9 @@ public class VeiculoServiceImpl implements VeiculoService {
     private VeiculoRepository repository;
 
     @Override
-    public List<Veiculo> findAll() {
+    public Page<Veiculo> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
+    }public List<Veiculo> findAll() {
         return repository.findAll();
     }
 

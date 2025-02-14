@@ -4,6 +4,9 @@ import com.vehicleregistration.vehicle_registration.model.Veiculo;
 import com.vehicleregistration.vehicle_registration.service.VeiculoService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,12 +24,17 @@ public class VeiculoControllerImpl {
     private VeiculoService vehicleService;
 
     @GetMapping
-    public ResponseEntity<List<Veiculo>> findAll() {
-        List<Veiculo> veiculos = vehicleService.findAll();
+    public ResponseEntity<Page<Veiculo>> findAll(
+            @RequestParam(defaultValue = "0") int page, // Número da página (começa em 0)
+            @RequestParam(defaultValue = "10") int size // Tamanho da página
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Veiculo> veiculos = vehicleService.findAll(pageable);
+
         if (veiculos.isEmpty()) {
             return ResponseEntity.noContent().build(); // 204 No Content se a lista estiver vazia
         }
-        return ResponseEntity.ok(veiculos); // 200 OK
+        return ResponseEntity.ok(veiculos); // 200 OK com a página de veículos
     }
 
     @GetMapping("/{id}")
