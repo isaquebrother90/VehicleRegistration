@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Veiculo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+    //@JsonIgnore
     private Long id;
 
     @NotNull(message = "O nome do veículo não pode ser nulo")
