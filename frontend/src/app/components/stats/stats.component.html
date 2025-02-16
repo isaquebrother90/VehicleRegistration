@@ -1,0 +1,97 @@
+<div class="stats-container">
+  <!-- Filtros -->
+  <mat-card class="filter-card">
+    <mat-card-header>
+      <mat-card-title>Filtrar Veículos</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="filter-grid">
+        <mat-form-field>
+          <input matInput placeholder="Marca" [(ngModel)]="filtros.marca">
+        </mat-form-field>
+        
+        <!-- Altera o input do ano -->
+        <mat-form-field>
+          <input matInput 
+                 type="number" 
+                 placeholder="Ano" 
+                 [ngModel]="filtros.ano"
+                 (ngModelChange)="converterAno($event)">
+        </mat-form-field>
+        
+        <mat-form-field>
+          <input matInput placeholder="Cor" [(ngModel)]="filtros.cor">
+        </mat-form-field>
+          
+      </div>
+      <button mat-raised-button color="primary" (click)="aplicarFiltros()">
+        Aplicar Filtros
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Estatísticas -->
+  <div class="stats-grid">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Não Vendidos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <h2>{{ naoVendidos }}</h2>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Distribuição por Década</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let decada of distribuicaoDecada">
+            {{ decada }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Distribuição por Fabricante</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let fabricante of distribuicaoFabricante">
+            {{ fabricante }}
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Últimos Cadastrados (7 dias)</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let veiculo of ultimaSemana">
+            {{ veiculo.veiculo }} - {{ veiculo.marca }} ({{ veiculo.ano }})
+          </mat-list-item>
+        </mat-list>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <!-- Resultados Filtrados -->
+  <mat-card *ngIf="veiculosFiltrados.length > 0">
+    <mat-card-header>
+      <mat-card-title>Resultados do Filtro</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let veiculo of veiculosFiltrados">
+          {{ veiculo.veiculo }} - {{ veiculo.marca }} ({{ veiculo.ano }})
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
