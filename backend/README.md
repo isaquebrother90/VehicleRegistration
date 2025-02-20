@@ -70,3 +70,7 @@ Para verificar os testes integrados disponíveis execute:
 ```
 mvn test
 ```
+
+## Melhorias futuras
+- Adicionar indice para campos marca e ano para melhoria de performance em consultas
+- Adicionar deploy com Git Hub Actions
