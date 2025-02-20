@@ -1,7 +1,7 @@
 # VehicleRegistration
 
 ## Descrição
-Solução responsável por permitir registrao veículos, permitindo alterações e buscas personalizadas.
+Solução responsável por permitir registro de veículos, alterações e buscas personalizadas.
 
 Premissas
 
