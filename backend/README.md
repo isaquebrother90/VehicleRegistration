@@ -14,8 +14,8 @@ Premissas
 ## Funcionalidades
 - **Adiciona veículo**
 - **Atualiza veículo**
-  - **Atualiza parcialmente um veículo**
-  g- **Busca Paginada**: Suporte a busca paginada para facilitar a navegação e a recuperação de dados em partes. Suporta filtro por nome, idade e cep. Para todos os tipos de usuário (ADMIN e USER).
+- **Atualiza parcialmente um veículo**
+- **Busca Paginada**: Suporte a busca paginada para facilitar a navegação e a recuperação de dados em partes. 
 
 ## Pré-requisitos
 - **Java 17**: Certifique-se de ter o Java 17 instalado em sua máquina.
@@ -70,6 +70,3 @@ Para verificar os testes integrados disponíveis execute:
 ```
 mvn test
 ```
-
-### TO DO:
-- Testes unitários do controlador de pessoa e da integração com api externa ViaCEP.
